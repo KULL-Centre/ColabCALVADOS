@@ -14,14 +14,25 @@ The notebook `CALVADOS_simulate_and_reweight.ipynb` integrates simulations with 
 
 *Tip: To download files from GitHub, open the file and click on the download button. If this button is not present (it is not if you are not logged in with a GitHub account), click on “Raw” and then “File>Save page as…” from Chrome’s menu.*
 
+## Uploading PDB structure and SAXS curve
+
 5. If you are simulating a MDP, please run "3. Upload a PDB file for MDPs" and upload your pdb file. **Skip** this cell if your protein is an IDP. The residues in the PDB file need to be listed in the same order as they appear in the protein sequence. This ensures the PDB file is consistent with the definition of the folded domains. 
 6. Run "4. Upload SAXS data" to upload the SAXS data file. The unit will be automatically detected, and converted if necessary.
+
+## Setting up and running an MD simulation
+
 7. In "5. Set force field and simulation time", one can select "Break_CALVADOS" to add random noise to the amino-acid stickiness parameters of the CALVADOS model (λ values). The resulting simulations will not be trustworthy. This function is added for teaching purposes, so that the effect of reweighting could be appreciated more when using a force field that does not reproduce experimental data accurately. The default option “AUTO” will set the simulation time depending on sequence length. The longer the IDR, the more heterogeneous the ensemble of conformations it can adopt. Moreover, the reconfiguration time of IDRs increases with increasing sequence length. Therefore, longer sequences will require more sampling. Typical simulation times range from ca. 5 min (a 71-ns-long simulation of an IDR of 70 residues), 7 min (71-ns-long simulation of an IDR of 140 residues), to 34 min for a 373-ns-long simulation of an IDR of 351 residues.
 8. Run the subsequent three cells one by one to import relevant modules.
 9. Start simulations by running "6. Run MD simulation".
+
+## Analyses and visualization
+
 10. Run "Install Pepsi-SAXS and download BLOCKING, BME, and BIFT" to install necessary packages for reweighting.
 11. "7. Analysis" plots the distributions and averages of some structural parameters: radius of gyration, R<sub>g</sub>; end-to-end distance, R<sub>ee</sub>; contact map between residues and apparent Flory scaling exponent, ν (only for IDPs). ν is calculated from a nonlinear fit to the ensemble-averaged inter-residue distances, &#8730;&#9001;R<sup>2</sup><sub>ij</sub>&#9002;, as a function of sequence separations, |i-j|.
 12. "8. Visualize trajectory" will visualize your protein. You can rotate the protein or zoom in/out.
+
+## Backmapping and BME reweighting
+
 13. "Install `cg2all` for all-atom reconstruction (will take ~5 mins)" will install `cg2all` package to reconstruct the All-atom trajectory.
 14. Run "Reconstruct all-atom trajectory" to Reconstruct all-atom trajectory.
 15. In "9. Ensemble reweighting against experimental data", the Bayesian/Maximum-Entropy approach is used to reweight the MD simulations so that it better matches the SAXS data. This is done by minimizing the function<br>
@@ -35,9 +46,9 @@ $\theta$ is a free parameter that must be tuned to strike a balance between obta
 We do two types of calculation in this cell:
     1. We calculate SAXS curves for each trajectory frame using Pepsi-SAXS.
     2. We execute BME reweighing using different $\theta$ values. For each $\theta$ value, we calculate $\chi^2$ and $\phi_{eff}=\exp(S_{rel})$.
-17. In "Setting θ", you will scan θ and for each value plot $\chi^2$ vs $\phi_{eff}=\exp(S_{rel})$. A good value of θ is located at the elbow of the curve. After switching the “THETA_LOCATOR” option from “AUTO” to “INTERACTIVE”, and running the cell once more, you can select a θ value of your choice from the drop-down menu.
-18. In "10. Analyze reweighted ensemble", This cell shows comparisons between SAXS curves and conformational properties from <font color='#808080'>experiments (grey) </font> and from the simulation trajectory <font color='#058ED9'>before (blue) </font> and after BME <font color='#d42828'>reweighting (red) </font>. As an exercise, go back to cell 5 and check the "Break_CALVADOS" box. That will add random noise to the amino acid stickiness parameters of the CALVADOS model ($\lambda$ values). The resulting force field will likely not reproduce the experimental data accurately and the effect of reweighting will be more evident. 
-19. In "11. Download results", you can download all the relevant files:
+16. In "Setting θ", you will scan θ and for each value plot $\chi^2$ vs $\phi_{eff}=\exp(S_{rel})$. A good value of θ is located at the elbow of the curve. After switching the “THETA_LOCATOR” option from “AUTO” to “INTERACTIVE”, and running the cell once more, you can select a θ value of your choice from the drop-down menu.
+17. In "10. Analyze reweighted ensemble", This cell shows comparisons between SAXS curves and conformational properties from <font color='#808080'>experiments (grey) </font> and from the simulation trajectory <font color='#058ED9'>before (blue) </font> and after BME <font color='#d42828'>reweighting (red) </font>. As an exercise, go back to cell 5 and check the "Break_CALVADOS" box. That will add random noise to the amino acid stickiness parameters of the CALVADOS model ($\lambda$ values). The resulting force field will likely not reproduce the experimental data accurately and the effect of reweighting will be more evident. 
+18. In "11. Download results", you can download all the relevant files:
 
     `${protein_name}_cg.dcd`: the coarse-grained trajectory file;
 
