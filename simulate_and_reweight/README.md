@@ -2,15 +2,15 @@
 
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/CALVADOS_simulate_and_reweight.ipynb)
 
-This [Jupyter Notebook](https://colab.research.google.com/github/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/CALVADOS_simulate_and_reweight.ipynb) is designed to run molecular dynamics (MD) simulations of intrinsically disordered proteins (IDPs) and multi-domain proteins (MDPs), and integrate simulations with small-angle X-ray scattering (SAXS) data. Simulations are performed using CALVADOS, an implicit-solvent coarse-grained model. 
-The notebook `CALVADOS_simulate_and_reweight.ipynb` integrates simulations with experimental small-angle X-ray scattering (SAXS) data by applying Bayesian/Maximum-Entropy reweighting to refine the conformational ensemble of the protein of study.
+This [Jupyter Notebook](https://colab.research.google.com/github/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/CALVADOS_simulate_and_reweight.ipynb) is designed to run molecular dynamics (MD) simulations of intrinsically disordered proteins (IDPs) and multi-domain proteins (MDPs), and integrate simulations with small-angle X-ray scattering (SAXS) data. Simulations are performed using CALVADOS, an implicit-solvent coarse-grained model. Bayesian/Maximum-Entropy reweighting is used to
+refine against SAXS data the conformational ensemble of the IDP or MDP of study.
 
 ## Getting Started
 
 1. Open the following link (Google Chrome is required for everything to work properly) [CALVADOS_simulate_and_reweight.ipynb](https://colab.research.google.com/github/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/CALVADOS_simulate_and_reweight.ipynb)
-2. Make sure to have GPUs enabled: go to “Runtime”, select “Change runtime type”, select “T4 GPU”, then click on "Connect T4".
+2. Make sure to have GPUs enabled: go to `Runtime`, select `Change runtime type`, select `T4 GPU`, then click on `Connect T4`.
 3. Then run "1. Set the environment for simulation". After running this cell, you will notice a prompt informing you that "Your session crashed for an unknown reason". This is required for all packages to work properly. Ignore it and move on to the next step.
-4. In "2. Configure your protein", input the protein name, sequence, temperature, ionic strength, pH, and domain boundary. You can find those information in [data/SAXS/exp_conditions.csv](https://github.com/KULL-Centre/ColabCALVADOS/blob/main/data/SAXS/exp_conditions.csv) for 13 IDPs and 13 MDPs (see DOI: 10.1016/j.bpj.2022.12.013, 10.1002/pro.5172). In [data/SAXS](https://github.com/KULL-Centre/ColabCALVADOS/tree/main/data/SAXS) you will also find structure files (.pdb for 13 MDP) and SAXS data files (.dat). Choose the protein you want to work with and download its ".pdb" files (for MDPs) and SAXS data (“.dat” file). You can also use your own data for the protein of your choice. By checking `example`, all the inputs in fields will be ignored and the MDP THB_C2 will serve as an example with pre-defined settings.
+4. In "2. Configure your protein", input the protein name, sequence, temperature, ionic strength, pH, and domain boundary. You can find those information in [data/SAXS/exp_conditions.csv](https://github.com/KULL-Centre/ColabCALVADOS/blob/main/data/SAXS/exp_conditions.csv) for 13 IDPs and 13 MDPs (see DOI: 10.1016/j.bpj.2022.12.013, 10.1002/pro.5172). In [data/SAXS](https://github.com/KULL-Centre/ColabCALVADOS/tree/main/data/SAXS) you will also find structure files (`.pdb` for 13 MDPs) and SAXS data files (`.dat`). Choose the protein you want to work with and download its `.pdb` file (for MDPs) and SAXS curve (`.dat` file). You can also use your own data for the protein of your choice. By checking `example`, all the inputs in fields will be ignored and the MDP Ubq4 will serve as an example with pre-defined settings.
 
 *Tip: To download files from GitHub, open the file and click on the download button. If this button is not present (it is not if you are not logged in with a GitHub account), click on “Raw” and then “File>Save page as…” from Chrome’s menu.*
 
@@ -21,7 +21,8 @@ The notebook `CALVADOS_simulate_and_reweight.ipynb` integrates simulations with 
 
 ## Setting up and running an MD simulation
 
-7. In "5. Set force field and simulation time", one can select "Break_CALVADOS" to add random noise to the amino-acid stickiness parameters of the CALVADOS model (λ values). The resulting simulations will not be trustworthy. This function is added for teaching purposes, so that the effect of reweighting could be appreciated more when using a force field that does not reproduce experimental data accurately. The default option “AUTO” will set the simulation time depending on sequence length. The longer the IDR, the more heterogeneous the ensemble of conformations it can adopt. Moreover, the reconfiguration time of IDRs increases with increasing sequence length. Therefore, longer sequences will require more sampling. Typical simulation times range from ca. 5 min (a 71-ns-long simulation of an IDR of 70 residues), 7 min (71-ns-long simulation of an IDR of 140 residues), to 34 min for a 373-ns-long simulation of an IDR of 351 residues.
+7. In "5. Set force field and simulation time", the default option “AUTO” will set the simulation time depending on sequence length. The longer the IDR, the more heterogeneous the ensemble of conformations it can adopt. Moreover, the reconfiguration time of IDRs increases with increasing sequence length. Therefore, longer sequences will require more sampling. Typical simulation times range from ca. 5 min (a 71-ns-long simulation of an IDR of 70 residues), 7 min (71-ns-long simulation of an IDR of 140 residues), to 34 min for a 373-ns-long simulation of an IDR of 351 residues.<br>
+The option "Break_CALVADOS" adds random noise to the amino acid stickiness parameters of the CALVADOS model (λ values). The resulting simulations will not be trustworthy. This function is added for teaching purposes, so that the effect of reweighting could be appreciated more when using a force field that does not reproduce experimental data accurately. 
 8. Run the subsequent three cells one by one to import relevant modules.
 9. Start simulations by running "6. Run MD simulation".
 
@@ -37,11 +38,11 @@ The notebook `CALVADOS_simulate_and_reweight.ipynb` integrates simulations with 
 14. Run "Reconstruct all-atom trajectory" to Reconstruct all-atom trajectory.
 15. In "9. Ensemble reweighting against experimental data", the Bayesian/Maximum-Entropy approach is used to reweight the MD simulations so that it better matches the SAXS data. This is done by minimizing the function<br>
 $L(w_1 ... w_n) = \frac{m}{2}\chi^2(w_1 ... w_n)-\theta \times S_{rel}(w_1 ... w_n)$,<br>
-where $(w_1 ... w_n)$ are the statistical BME weights associated with each frame of the simulation.<br>
+where $(w_1 ... w_n)$ are the statistical weights associated with each frame of the simulation.<br>
 $\chi^2(w_1...w_n)=\frac{1}{m}\sum_i^m\frac{(\sum_j^nw_jI_j^{CALC}(q_i)-I^{EXP}(q_i))^2}{\sigma(q_i)^2}$<br>
 quantifies the agreement between simulation and SAXS, where $\sigma(q_i)$ is the error on the experimental SAXS intensities, $I^{EXP}(q)$.<br>
 $-S_{rel}(w_1...w_n)=\sum_j^nw_j\ln(\frac{w_j}{w_j^0})=\sum_j^nw_j\ln(w_j\times n)$<br>
-quantifies how much the new iBME weights are different from the initial ones.<br> 
+quantifies how much the new weights are different from the initial ones.<br> 
 $\theta$ is a free parameter that must be tuned to strike a balance between obtaining a good agreement with the experimental data (low $\chi^2$) and retaining as much information as possible from the starting simulation (high $S_{rel}$).<br> 
 We do two types of calculation in this cell:
     1. We calculate SAXS curves for each trajectory frame using Pepsi-SAXS.
@@ -73,9 +74,6 @@ We do two types of calculation in this cell:
     `${protein_name}/analyses/reweighted_calc_saxs.dat`;
     
     `${protein_name}/analyses/saxs_reweighted_conf_prop.pdf`;
-
-
-
 
 
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/CALVADOS_simulate_and_reweight.ipynb)
