@@ -11,9 +11,7 @@ This [Jupyter Notebook](https://colab.research.google.com/github/KULL-Centre/Col
 3. Run "1. Set the environment for simulation". After running this cell, you will notice a prompt informing you that "Your session crashed for an unknown reason". This is required for all packages to work properly. Ignore it and move on to the next step.
 4. In "2. Configure your protein", input the protein name, sequence, temperature, ionic strength, pH, and domain boundary. You can find those information in [data/SAXS/exp_conditions.csv](https://github.com/KULL-Centre/ColabCALVADOS/blob/main/data/SAXS/exp_conditions.csv) for 13 IDPs and 13 MDPs (see DOI: 10.1016/j.bpj.2022.12.013, 10.1002/pro.5172). In [data/SAXS](https://github.com/KULL-Centre/ColabCALVADOS/tree/main/data/SAXS) you will also find structure files (`.pdb`) for 13 MDPs. Choose the protein you want to work with and download its `.pdb` file. You can also use your own PDB for the protein of your choice. By checking `example`, all the inputs in fields will be ignored and the MDP Ubq4 will serve as an example with pre-defined settings.
 
-*Tip: To download files from GitHub, open the file and click on the download button. If this button is not present (it is not if you are not logged in with a GitHub account), click on “Raw” and then `File>Save page as…` from Chrome’s menu.*
-
-## Uploading PDB structure and SAXS curve
+*Tip: To download files from GitHub, open the file and click on the download button. If this button is not present (it is not if you are not logged in with a GitHub account), click on “Raw” and then `File > Save page as...` from Chrome’s menu.*
 
 5. If you are simulating a MDP, please run "3. Upload a PDB file for MDPs" and upload your pdb file. **Skip** this cell if your protein is an IDP. The residues in the PDB file need to be listed in the same order as they appear in the protein sequence. This ensures the PDB file is consistent with the definition of the folded domains. 
 
