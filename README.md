@@ -14,14 +14,15 @@ This repository provides Jupyter Notebooks designed to explore the conformationa
 
 ## Getting Started
 
-1. **Browse the Data**
+You will need a **Google account** and **Google Chrome** to work with the notebooks.
+
+1. **Browse the Data.**
    Visit the [data/SAXS](https://github.com/KULL-Centre/ColabCALVADOS/tree/main/data/SAXS) folder to find sequences, PDB structures and SAXS data for several IDRs and MDPs.
    - Select a protein and download its PDB (needed only for MDPs) and SAXS data file (`.dat`).
    - Alternatively, you can analyze a protein of your choice by providing your own sequence and SAXS data file.
 
-2. **Access the Notebook**
-   The lab exercise is conducted using a Jupyter Notebook hosted on Google Colab. You will need a Google account and preferably Google Chrome to work with the notebook.
-   To access the notebook, click the **"Open in Colab"** badge below. Further instructions can be found [here](https://github.com/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/README.md)
+2. **Access the Notebook.**
+   The lab exercise is conducted using a Jupyter Notebook hosted on Google Colab. To access the notebook, click the **"Open in Colab"** badge below. Further instructions can be found [here](https://github.com/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/README.md) and [here](https://github.com/KULL-Centre/ColabCALVADOS/blob/main/simulate/README.md).
 
    [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/CALVADOS_simulate_and_reweight.ipynb)
 
