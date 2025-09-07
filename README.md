@@ -2,6 +2,8 @@
 
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KULL-Centre/ColabCALVADOS/blob/main/simulate_and_reweight/CALVADOS_simulate_and_reweight.ipynb)
 
+**CUDA module in Colab CALVADOS is unavailable because of a recent update from Colab. We are working on that, but it might take some time. Please find calvados package https://github.com/KULL-Centre/CALVADOS if you want to use GPU acceleration. --07.09.2025**
+
 This repository provides Jupyter Notebooks designed to explore the conformational properties of **intrinsically disordered regions (IDRs)** and **multi-domain proteins (MDPs)** through **molecular dynamics (MD) simulations** on Google Colaboratory. Simulations are performed using **CALVADOS**, an implicit-solvent coarse-grained model.
 
 ## Folder Structure
