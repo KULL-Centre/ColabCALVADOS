@@ -8,6 +8,4 @@ The notebook explores how the regularization parameter $C$ affects model accurac
 
 Permutation feature importance is used to quantify the relative contribution of the input sequence features to model performance. After training the model for a given value of $C$, run the next cell to inspect how the permutation feature importances change.
 
-## References
-
 
